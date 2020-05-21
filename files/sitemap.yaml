@@ -1,0 +1,24 @@
+id: sitemap
+
+info:
+  name: Sitemap Disclosure
+  author: H3lyx
+  severity: low
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/sitemap.xml"
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - "<sitemap"
+          - "<loc>"
+        condition: or
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - "<loc>([^<]+)</loc>"
